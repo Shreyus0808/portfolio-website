@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <ul class="link-group">
+            <li class="link active"><a href="#">home</a></li>
+            <li class="link"><a href="#project-section">projects</a></li>
+            <li class="link"><a href="#about-section active">about</a></li>
+            <li class="link"><a href="#contact-section active">contact</a></li>
+        </ul>
+    </nav>
+    <!-- home section -->
+
+    <section class="home-section active">
+        <h1 class="hero-heading">heyy!! <br>Shreyus here</h1>
+        <img src="image/26bf882b-3921-4b20-b18e-ce649c1267f7.jpg" class="home-img" alt="">
+    </section>
+    <!-- project section -->
+    <section class="project-section">
+        <h1 class="project-heading">some of my projects</h1>
+        <div class="project-container">
+            <div class="project-card">
+                <img src="image/project-1.png.jpg" class="project-img" alt="">
+                <div class="project-content">
+                    <h1 class="project-title">project 01</h1>
+                    <p class="project-info">
+                        The information about the project goes here
+                    </p>
+                    <div class="project-btn-grp">
+                        <button class="project-btn github"><a href="https://www.instagram.com/shreyus_03/">My
+                                profile</a></button>
+                        <button class="project-btn live">see live</button>
+                        <!--<br class="project-btn github"><a href="https://www.meta.com/">'My profile'</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="image/1.png" class="project-img" alt="">
+                <div class="project-content">
+                    <h1 class="project-title">Leap Year Calculator</h1>
+                    <p class="project-info">
+                        To find which year is a leap year
+                    </p>
+                    <div class="project-btn-grp">
+                        <button class="project-btn github"><a href="https://github.com/Shreyus0808/PPS-Mini-Project">Git
+                                redirect</a></button>
+                        <button class="project-btn live">see live</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- about section -->
+    <section class="about-section active">
+        <div class="about">
+            <div class="about-img-container">
+                <img src="image/26bf882b-3921-4b20-b18e-ce649c1267f7.jpg" class="about-img" alt="">
+                <button class="download-cv-btn"><a
+                        href="https://www.linkedin.com/in/shreyus-r-6a9531246/m/">Linkedin</a></button>
+            </div>
+            <p class="about-info">Hey, Myself Shreyus R an undergrad at SRM University pursuing B-tech in Computer
+                Science & Engineering.
+                I'm an associate lead at srmkzilla in editorial.
+                Having basic knowledge on python, c, c++..</p>
+        </div>
+        <!-- skills -->
+        <div class="skill-section">
+            <h1 class="heading">skills</h1>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <img src="img/html.png" class="skill-img" alt="">
+                    <div class="skill-level">95%</div>
+                    <h1 class="skill-name">HTML</h1>
+                    <p class="skill-info">HTML (HyperText Markup Language) is the most basic building block of the
+                        Web.</p>
+                </div>
+                <div class="skill-card">
+                    <img src="img/html.png" class="skill-img" alt="">
+                    <div class="skill-level">95%</div>
+                    <h1 class="skill-name">CSS</h1>
+                    <p class="skill-info">Cascading Style Sheets (CSS) is a stylesheet language used to describe the
+                        presentation of a document written in HTML</p>
+                </div>
+                <div class="skill-card">
+                    <img src="img/html.png" class="skill-img" alt="">
+                    <div class="skill-level">80%</div>
+                    <h1 class="skill-name">Javascript</h1>
+                    <p class="skill-info">lightweight, interpreted, object-oriented language</p>
+                </div>
+                <div class="skill-card">
+                    <img src="img/html.png" class="skill-img" alt="">
+                    <div class="skill-level">95%</div>
+                    <h1 class="skill-name">C/C++</h1>
+                    <p class="skill-info">Coding Language</p>
+                </div>
+                <div class="skill-card">
+                    <img src="img/html.png" class="skill-img" alt="">
+                    <div class="skill-level">98%</div>
+                    <h1 class="skill-name">Python</h1>
+                    <p class="skill-info">Coding Language</p>
+                </div>
+
+            </div>
+        </div>
+        <!-- timeline -->
+        <div class="timeline">
+            <h1 class="heading">education and experience</h1>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">2009-20011</h1>
+                    <p class="card-detail">Studied in Kendriya Vidayalaya Pattom. Grade: | Class 10 CBSE-90% | |
+                        (PCM+CS)Class 12 CBSE- 95% |</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">2021-2025</h1>
+                    <p class="card-detail">UG in SRM University pursuing BTech in CSE</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">2021-Present</h1>
+                    <p class="card-detail">SRMKZILLA editorial associate lead</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- contact section -->
+    <section class="contact-section active">
+        <form class="contact-form">
+            <input type="text" name="name" id="name" autocomplete="off" placeholder="name">
+            <input type="text" name="email" id="email" autocomplete="off" placeholder="email">
+            <textarea name="msg" id="msg" placeholder="message" autocomplete="off"></textarea>
+            <button type="submit" class="form-submit-btn">contact</button>
+        </form>
+        <!-- map -->
+        <div class="map">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d448181.163742937!2d76.81306771991275!3d28.647279935262464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi!5e0!3m2!1sen!2sin!4v1639489002410!5m2!1sen!2sin"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+
+</html>
