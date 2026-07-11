@@ -32,6 +32,11 @@
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--offwhite); }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+  .nav-toggle span { width: 22px; height: 2px; background: var(--offwhite); display: block; transition: transform 0.25s, opacity 0.25s; }
+  .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /* HERO */
   .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 72px; }
@@ -136,18 +141,68 @@
   footer { padding: 1.5rem 3rem; border-top: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
   footer p { font-size: 0.72rem; color: var(--muted); }
   .coral-dot { color: var(--coral); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-toggle { display: flex; z-index: 110; }
+    .nav-links {
+      position: fixed; top: 60px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(10,22,40,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .nav-links.open { max-height: 320px; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 1rem 1.5rem; border-top: 1px solid var(--border-light); }
+
+    .hero { grid-template-columns: 1fr; padding-top: 60px; }
+    .hero-photo-col { height: 52vh; min-height: 320px; }
+    .hero-content-col { padding: 2.5rem 1.5rem 3rem; }
+    .hero-tagline { max-width: 100%; }
+    .hero-stats { position: static; margin-top: 2.5rem; justify-content: flex-start; gap: 2.5rem; }
+    .stat-item { text-align: left; }
+    .photo-tag { left: 1.25rem; bottom: 1.25rem; font-size: 0.62rem; padding: 0.35rem 0.7rem; }
+
+    section { padding: 3.5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+    .exp-item { grid-template-columns: 1fr; gap: 0.6rem; padding: 1.6rem 0; }
+    .exp-meta { display: flex; align-items: center; gap: 0.75rem; }
+
+    .projects-grid { grid-template-columns: 1fr; }
+
+    .contact { padding: 4.5rem 1.5rem; }
+    .contact-links { flex-direction: column; align-items: stretch; }
+    .contact-link { text-align: center; }
+
+    footer { flex-direction: column; gap: 0.4rem; text-align: center; padding: 1.5rem; }
+  }
+
+  @media (max-width: 420px) {
+    .hero-name { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+    .stat-num { font-size: 1.5rem; }
+    .stack-grid { grid-template-columns: 1fr; }
+    nav { padding: 0.9rem 1rem; }
+  }
 </style>
 </head>
 <body>
 
 <nav>
   <a href="#" class="nav-logo">SHR<span>.</span></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -428,5 +483,19 @@
   <p>Software Engineer</p>
 </footer>
 
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('active', open);
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+</script>
 </body>
 </html>
