@@ -1,160 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreyus R — Software Engineer</title>
+<meta name="description" content="Full-stack Software Engineer at Fidelity Investments. Based in Trivandrum & Bengaluru.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0A1628; --cobalt: #1845C4; --cobalt-soft: #2E5DE8;
+    --coral: #E8553E; --offwhite: #F5F2ED; --muted: #8A8A8A;
+    --dark-panel: #0E1D33; --border-light: rgba(255,255,255,0.08);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--offwhite); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(10,22,40,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--offwhite); text-decoration: none; }
+  .nav-logo span { color: var(--cobalt-soft); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--offwhite); }
 
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 72px; }
+  .hero-photo-col { position: relative; overflow: hidden; background: #0b1a2e; }
+  .hero-photo-col img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+    filter: grayscale(15%) contrast(1.05);
+    transition: filter 0.6s;
+  }
+  .hero-photo-col:hover img { filter: grayscale(0%) contrast(1.08); }
+  .photo-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(24,69,196,0.18) 0%, transparent 55%); pointer-events: none; }
+  .photo-tag {
+    position: absolute; bottom: 2.5rem; left: 2.5rem;
+    background: var(--cobalt); color: white;
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.45rem 0.9rem; border-radius: 2px;
+  }
+
+  .hero-content-col { display: flex; flex-direction: column; justify-content: center; padding: 4rem 3.5rem; position: relative; }
+  .hero-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cobalt-soft); margin-bottom: 1.4rem; }
+  .hero-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(3.2rem, 5.5vw, 5.8rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.03em; color: var(--offwhite); margin-bottom: 1.8rem; }
+  .hero-name .accent { color: var(--cobalt-soft); }
+  .hero-tagline { font-size: 0.97rem; font-weight: 300; line-height: 1.75; color: #A8A8A8; max-width: 370px; margin-bottom: 2.8rem; border-left: 2px solid var(--cobalt); padding-left: 1.2rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.85rem 1.8rem; border-radius: 3px; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; display: inline-block; }
+  .btn-primary { background: var(--cobalt); color: white; }
+  .btn-primary:hover { background: var(--cobalt-soft); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--offwhite); border: 1px solid rgba(255,255,255,0.2); }
+  .btn-ghost:hover { border-color: var(--offwhite); transform: translateY(-1px); }
+  .hero-stats { position: absolute; bottom: 2.5rem; right: 3.5rem; display: flex; gap: 2.5rem; }
+  .stat-item { text-align: right; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--offwhite); line-height: 1; }
+  .stat-num span { color: var(--cobalt-soft); }
+  .stat-label { font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.3rem; }
+
+  /* TICKER */
+  .ticker { padding: 2.2rem 0; background: var(--cobalt); overflow: hidden; }
+  .ticker-track { display: flex; gap: 2.5rem; animation: ticker 28s linear infinite; width: max-content; }
+  .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); white-space: nowrap; display: flex; align-items: center; gap: 1rem; }
+  .ticker-dot { width: 4px; height: 4px; background: rgba(255,255,255,0.35); border-radius: 50%; flex-shrink: 0; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobalt-soft); margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--offwhite); margin-bottom: 3rem; }
+  .coral-line { width: 40px; height: 3px; background: var(--coral); margin-bottom: 1.8rem; }
+
+  /* ABOUT */
+  .about { background: var(--dark-panel); }
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem; align-items: start; max-width: 1100px; margin: 0 auto; }
+  .about-text p { font-size: 1rem; line-height: 1.82; color: #B0B0B0; margin-bottom: 1.4rem; }
+  .about-text p strong { color: var(--offwhite); font-weight: 500; }
+  .stack-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobalt-soft); margin-bottom: 1rem; }
+  .stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-bottom: 2rem; }
+  .stack-chip { font-size: 0.75rem; font-weight: 500; padding: 0.5rem 0.85rem; background: rgba(24,69,196,0.1); border: 1px solid rgba(24,69,196,0.28); border-radius: 3px; color: #9BB8FF; }
+  .tools-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tool-chip { font-size: 0.72rem; font-weight: 500; padding: 0.4rem 0.75rem; background: rgba(232,85,62,0.08); border: 1px solid rgba(232,85,62,0.25); border-radius: 3px; color: #F0957E; }
+
+  /* EXPERIENCE */
+  .experience { background: var(--navy); }
+  .exp-inner { max-width: 1100px; margin: 0 auto; }
+  .exp-list { max-width: 820px; }
+  .exp-item { display: grid; grid-template-columns: 150px 1fr; gap: 2.5rem; padding: 2rem 0; border-top: 1px solid var(--border-light); }
+  .exp-item:last-child { border-bottom: 1px solid var(--border-light); }
+  .exp-meta { padding-top: 0.15rem; }
+  .exp-year { font-size: 0.72rem; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; line-height: 1.5; }
+  .exp-badge { display: inline-block; margin-top: 0.5rem; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.22rem 0.55rem; border-radius: 2px; }
+  .badge-ft { background: rgba(24,69,196,0.15); color: #7BA4F5; border: 1px solid rgba(24,69,196,0.3); }
+  .badge-intern { background: rgba(232,85,62,0.1); color: #F0957E; border: 1px solid rgba(232,85,62,0.25); }
+  .exp-role { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--offwhite); margin-bottom: 0.2rem; }
+  .exp-company { font-size: 0.8rem; color: var(--cobalt-soft); font-weight: 500; margin-bottom: 0.9rem; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 0.86rem; line-height: 1.72; color: #8A8A8A; padding-left: 1rem; position: relative; margin-bottom: 0.4rem; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--cobalt); font-size: 0.75rem; }
+
+  /* PROJECTS */
+  .projects { background: var(--dark-panel); }
+  .projects-inner { max-width: 1100px; margin: 0 auto; }
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; border: 1.5px solid var(--border-light); border-radius: 4px; overflow: hidden; }
+  .project-card { padding: 2rem 1.8rem; background: rgba(255,255,255,0.02); transition: background 0.3s; }
+  .project-card:hover { background: rgba(24,69,196,0.07); }
+  .project-icon { font-size: 1.3rem; margin-bottom: 1rem; }
+  .project-name { font-family: 'Space Grotesk', sans-serif; font-size: 0.98rem; font-weight: 600; color: var(--offwhite); margin-bottom: 0.55rem; }
+  .project-desc { font-size: 0.81rem; line-height: 1.68; color: #747474; margin-bottom: 1.1rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .project-tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.28rem 0.55rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact { background: var(--navy); text-align: center; padding: 7rem 3rem; }
+  .contact-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--offwhite); margin-bottom: 1.4rem; }
+  .contact-title span { color: var(--cobalt-soft); }
+  .contact-sub { font-size: 0.97rem; color: var(--muted); max-width: 400px; margin: 0 auto 3rem; line-height: 1.75; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link { font-family: 'Space Grotesk', sans-serif; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--offwhite); text-decoration: none; padding: 0.8rem 1.5rem; border: 1px solid rgba(255,255,255,0.14); border-radius: 3px; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--cobalt-soft); color: var(--cobalt-soft); }
+
+  /* FOOTER */
+  footer { padding: 1.5rem 3rem; border-top: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
+  footer p { font-size: 0.72rem; color: var(--muted); }
+  .coral-dot { color: var(--coral); }
+</style>
 </head>
-
 <body>
-    <!-- navbar -->
-    <nav class="navbar">
-        <ul class="link-group">
-            <li class="link active"><a href="#">home</a></li>
-            <li class="link"><a href="#project-section">projects</a></li>
-            <li class="link"><a href="#about-section active">about</a></li>
-            <li class="link"><a href="#contact-section active">contact</a></li>
-        </ul>
-    </nav>
-    <!-- home section -->
 
-    <section class="home-section active">
-        <h1 class="hero-heading">heyy!! <br>Shreyus here</h1>
-        <img src="image/26bf882b-3921-4b20-b18e-ce649c1267f7.jpg" class="home-img" alt="">
-    </section>
-    <!-- project section -->
-    <section class="project-section">
-        <h1 class="project-heading">some of my projects</h1>
-        <div class="project-container">
-            <div class="project-card">
-                <img src="image/spotify.png" class="project-img" alt="">
-                <div class="project-content">
-                    <h1 class="project-title">project 01</h1>
-                    <p class="project-info">
-                        Spotify in dark theme
-                    </p>
-                    <div class="project-btn-grp">
-                        <button class="project-btn github"><a href="https://www.figma.com/file/hx6cqPRbDhoNRMQ9WWgdMC/Spotify-app?node-id=0%3A1">Figma redirect</a></button>
-                        <button class="project-btn live">see live</button>
-                        <!--<br class="project-btn github"><a href="https://www.meta.com/">'My profile'</a>-->
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="image/1.png" class="project-img" alt="">
-                <div class="project-content">
-                    <h1 class="project-title">Leap Year Calculator</h1>
-                    <p class="project-info">
-                        To find which year is a leap year
-                    </p>
-                    <div class="project-btn-grp">
-                        <button class="project-btn github"><a href="https://github.com/Shreyus0808/PPS-Mini-Project">Git
-                                redirect</a></button>
-                        <button class="project-btn live">see live</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- about section -->
-    <section class="about-section active">
-        <div class="about">
-            <div class="about-img-container">
-                <img src="image/26bf882b-3921-4b20-b18e-ce649c1267f7.jpg" class="about-img" alt="">
-                <button class="download-cv-btn"><a
-                        href="https://www.linkedin.com/in/shreyus-r-6a9531246/m/">Linkedin</a></button>
-            </div>
-            <p class="about-info">Hey, Myself Shreyus R an undergrad at SRM University pursuing B-tech in Computer
-                Science & Engineering.
-                I'm an associate lead at srmkzilla in editorial.
-                Uses tools like Adobe XD, Figma, Premier Pro, After Effects.
-                Having basic knowledge on python, c, c++..</p>
-        </div>
-        <!-- skills -->
-        <div class="skill-section">
-            <h1 class="heading">skills</h1>
-            <div class="skills-container">
-                <div class="skill-card">
-                    <img src="img/html.png" class="skill-img" alt="">
-                    <div class="skill-level">90%</div>
-                    <h1 class="skill-name">HTML</h1>
-                    <p class="skill-info">HTML (HyperText Markup Language) is the most basic building block of the
-                        Web.</p>
-                </div>
-                <div class="skill-card">
-                    <img src="img/html.png" class="skill-img" alt="">
-                    <div class="skill-level">90%</div>
-                    <h1 class="skill-name">CSS</h1>
-                    <p class="skill-info">Cascading Style Sheets (CSS) is a stylesheet language used to describe the
-                        presentation of a document written in HTML</p>
-                </div>
-                <div class="skill-card">
-                    <img src="img/html.png" class="skill-img" alt="">
-                    <div class="skill-level">80%</div>
-                    <h1 class="skill-name">Javascript</h1>
-                    <p class="skill-info">lightweight, interpreted, object-oriented language</p>
-                </div>
-                <div class="skill-card">
-                    <img src="img/html.png" class="skill-img" alt="">
-                    <div class="skill-level">90%</div>
-                    <h1 class="skill-name">C/C++</h1>
-                    <p class="skill-info">Coding Language</p>
-                </div>
-                <div class="skill-card">
-                    <img src="img/html.png" class="skill-img" alt="">
-                    <div class="skill-level">92%</div>
-                    <h1 class="skill-name">UI/UX</h1>
-                    <p class="skill-info">Using adobe XD and figma to make UI/UX</p>
-                </div>
+<nav>
+  <a href="#" class="nav-logo">SHR<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-            </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-photo-col">
+    <img src="shreyus.png" alt="Shreyus R" loading="eager" />
+    <div class="photo-overlay"></div>
+    <div class="photo-tag">Trivandrum / Bengaluru</div>
+  </div>
+  <div class="hero-content-col">
+    <p class="hero-eyebrow">Software Engineer &amp; Builder</p>
+    <h1 class="hero-name">Shrey<br><span class="accent">us.</span></h1>
+    <p class="hero-tagline">
+      Full-stack engineer at Fidelity Investments. I build fintech platforms, ship production code with AI, and bridge the gap between engineering and business.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View my work</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">8.93<span>/10</span></div>
+        <div class="stat-label">CGPA, SRM</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Java <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Spring Boot <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Angular <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Node.js <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Python <span class="ticker-dot"></span></span>
+    <span class="ticker-item">PostgreSQL <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AWS <span class="ticker-dot"></span></span>
+    <span class="ticker-item">GitHub Copilot <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI/ML <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Docker <span class="ticker-dot"></span></span>
+    <span class="ticker-item">REST APIs <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Solutions Engineering <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Java <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Spring Boot <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Angular <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Node.js <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Python <span class="ticker-dot"></span></span>
+    <span class="ticker-item">PostgreSQL <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AWS <span class="ticker-dot"></span></span>
+    <span class="ticker-item">GitHub Copilot <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI/ML <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Docker <span class="ticker-dot"></span></span>
+    <span class="ticker-item">REST APIs <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Solutions Engineering <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">About me</p>
+      <h2 class="section-title">Engineer.<br>Builder.<br>Problem-solver.</h2>
+      <div class="coral-line"></div>
+      <p>I'm a full-stack software engineer based in Trivandrum and Bengaluru, currently at <strong>Fidelity Investments</strong> building internal financial platforms and portals. My stack spans Java, Spring Boot, and Angular — writing production code for systems that handle real financial data.</p>
+      <p>I use <strong>AI tools like GitHub Copilot and Claude daily</strong> to accelerate development, debug faster, and ship cleaner documentation — treating AI as a genuine force multiplier on the job.</p>
+      <p>Outside work, I'm building a fitness app (<strong>JackedUp</strong>), developing operational software for my family's HVAC business, and actively pivoting toward <strong>Solutions Engineering</strong> — the intersection of technical depth and direct client impact.</p>
+    </div>
+    <div>
+      <p class="stack-label">Languages &amp; Frameworks</p>
+      <div class="stack-grid">
+        <div class="stack-chip">Java</div>
+        <div class="stack-chip">Spring Boot</div>
+        <div class="stack-chip">Angular</div>
+        <div class="stack-chip">Python</div>
+        <div class="stack-chip">Node.js</div>
+        <div class="stack-chip">React</div>
+        <div class="stack-chip">SQL / NoSQL</div>
+        <div class="stack-chip">REST APIs</div>
+      </div>
+      <p class="stack-label" style="margin-top: 1.4rem;">Cloud &amp; AI tools</p>
+      <div class="tools-row">
+        <div class="tool-chip">AWS</div>
+        <div class="tool-chip">Azure</div>
+        <div class="tool-chip">Docker</div>
+        <div class="tool-chip">GitHub Copilot</div>
+        <div class="tool-chip">Claude</div>
+        <div class="tool-chip">Jenkins</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="exp-inner">
+    <p class="section-label">Career</p>
+    <h2 class="section-title">Where I've been.</h2>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-year">Aug 2025 – Present</div>
+          <span class="exp-badge badge-ft">Full-time</span>
         </div>
-        <!-- timeline -->
-        <div class="timeline">
-            <h1 class="heading">education and experience</h1>
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">2009-20011</h1>
-                    <p class="card-detail">Studied in Kendriya Vidayalaya Pattom. Grade: | Class 10 CBSE-90% | |
-                        (PCM+CS)Class 12 CBSE- 95% |</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">2021-2025</h1>
-                    <p class="card-detail">UG in SRM University pursuing BTech in CSE</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">2021-Present</h1>
-                    <p class="card-detail">SRMKZILLA editorial associate lead</p>
-                </div>
-            </div>
+        <div>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-company">Fidelity Investments, Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Build and maintain internal financial platforms and portals, working across Angular frontends and Java / Spring Boot backends.</li>
+            <li>Partner with cross-functional business and engineering teams to translate stakeholder requirements into production-ready software.</li>
+            <li>Use AI tools (GitHub Copilot, Claude) daily to accelerate development, debugging, and documentation — consistently delivering faster without compromising code quality.</li>
+          </ul>
         </div>
-    </section>
-    <!-- contact section -->
-    <section class="contact-section active">
-        <form class="contact-form">
-            <input type="text" name="name" id="name" autocomplete="off" placeholder="name">
-            <input type="text" name="email" id="email" autocomplete="off" placeholder="email">
-            <textarea name="msg" id="msg" placeholder="message" autocomplete="off"></textarea>
-            <button type="submit" class="form-submit-btn">contact</button>
-        </form>
-        <!-- map -->
-        <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d448181.163742937!2d76.81306771991275!3d28.647279935262464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi!5e0!3m2!1sen!2sin!4v1639489002410!5m2!1sen!2sin"
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-year">Jan 2025 – Jun 2025</div>
+          <span class="exp-badge badge-intern">Internship</span>
         </div>
-    </section>
-    <script src="script.js"></script>
+        <div>
+          <div class="exp-role">Full Stack Engineer Intern</div>
+          <div class="exp-company">Fidelity Investments, Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Owned end-to-end feature delivery for a high-traffic financial platform, from requirement gathering through deployment.</li>
+            <li>Improved data-processing efficiency via PL/SQL and Spring Boot optimisations, reducing friction in downstream business processes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-year">Jun 2024 – Aug 2024</div>
+          <span class="exp-badge badge-intern">Internship</span>
+        </div>
+        <div>
+          <div class="exp-role">Full Stack Intern</div>
+          <div class="exp-company">Fidelity Investments, Bengaluru</div>
+          <ul class="exp-bullets">
+            <li>Ramped up on Angular and Spring Boot, shipping production-level code within weeks of joining.</li>
+            <li>Improved user-facing features with a focus on real end-user experience, not just functional correctness.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-year">Nov 2023 – Jan 2024</div>
+          <span class="exp-badge badge-intern">Internship</span>
+        </div>
+        <div>
+          <div class="exp-role">Software Engineer Intern</div>
+          <div class="exp-company">WaysAhead Global, Singapore (Remote)</div>
+          <ul class="exp-bullets">
+            <li>Led a 4-member team delivering full-stack websites for external clients, managing scope and deadlines end-to-end.</li>
+            <li>Built scalable MERN-based frontends for high-traffic client sites, balancing client requirements against technical feasibility.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-year">Jun 2023 – Aug 2023</div>
+          <span class="exp-badge badge-intern">Internship</span>
+        </div>
+        <div>
+          <div class="exp-role">AI / ML Intern</div>
+          <div class="exp-company">VSSC, ISRO, Thiruvananthapuram</div>
+          <ul class="exp-bullets">
+            <li>Developed an object-detection model using Python, OpenCV, and YOLO to analyse satellite imagery in support of mission objectives.</li>
+            <li>Extracted actionable insights from large-scale satellite datasets and presented findings to a technical stakeholder team.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="projects-inner">
+    <p class="section-label">Work</p>
+    <h2 class="section-title">Things I've built.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">⚡</div>
+        <div class="project-name">JackedUp</div>
+        <div class="project-desc">Fitness tracking app with calorie/macro tracking, workout logging, and a lean bulk meal plan. Launched with an Instagram DM keyword trigger flow for user acquisition.</div>
+        <div class="project-tags">
+          <span class="project-tag">Mobile App</span>
+          <span class="project-tag">Fitness</span>
+          <span class="project-tag">Growth</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">📊</div>
+        <div class="project-name">DeltaQ Performance System</div>
+        <div class="project-desc">Gamified performance management system for a 4-team HVAC business — scoring rules, daily log, complaint tracking, and a leaderboard. Full discovery-to-delivery cycle.</div>
+        <div class="project-tags">
+          <span class="project-tag">Operations</span>
+          <span class="project-tag">Gamification</span>
+          <span class="project-tag">Automation</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🤖</div>
+        <div class="project-name">KYC-Bot — Azure Form Recognizer</div>
+        <div class="project-desc">Automated KYC document processing using Azure Cognitive Services and Blob Storage, significantly reducing manual workload in document handling workflows.</div>
+        <div class="project-tags">
+          <span class="project-tag">Azure</span>
+          <span class="project-tag">Cognitive Services</span>
+          <span class="project-tag">Automation</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🏗️</div>
+        <div class="project-name">Urban Homes</div>
+        <div class="project-desc">MERN-based platform connecting builders, suppliers, and designers with OTP-based login and real-time messaging for direct party coordination.</div>
+        <div class="project-tags">
+          <span class="project-tag">MERN</span>
+          <span class="project-tag">Real-time</span>
+          <span class="project-tag">Platform</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🛰️</div>
+        <div class="project-name">Real-Time Object Detector</div>
+        <div class="project-desc">Vehicle and traffic-signal detection system built with Python, OpenCV, and YOLO — including an integrated collision-warning module. Developed during ISRO internship.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">OpenCV</span>
+          <span class="project-tag">YOLO</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🏠</div>
+        <div class="project-name">House Price Predictor</div>
+        <div class="project-desc">ML system for predicting house prices combining feature engineering, regression models, and a clean prediction interface built in Python.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Machine Learning</span>
+          <span class="project-tag">Regression</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label" style="margin-bottom: 1rem;">Contact</p>
+  <h2 class="contact-title">Let's build<br><span>something.</span></h2>
+  <p class="contact-sub">Open to solutions engineering roles, technical collaborations, and interesting software problems.</p>
+  <div class="contact-links">
+    <a href="https://linkedin.com/in/shreyus" class="contact-link">LinkedIn ↗</a>
+    <a href="https://github.com/Shreyus0808" class="contact-link">GitHub ↗</a>
+    <a href="https://www.instagram.com/shreyus_03" class="contact-link">Instagram ↗</a>
+    <a href="mailto:shreyus.rajiv@gmail.com" class="contact-link">Email ↗</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Shreyus R <span class="coral-dot">•</span> Trivandrum / Bengaluru</p>
+  <p>Software Engineer</p>
+</footer>
+
 </body>
-
 </html>
